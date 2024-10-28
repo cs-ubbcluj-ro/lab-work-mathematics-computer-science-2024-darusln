@@ -1,3 +1,4 @@
+Mini-Language based on  C++:
 1. Language Definition:
     1.1 Alphabet:
         Upper and lower case letters (A-Z, a-z) from the English alphabet
@@ -6,12 +7,12 @@
     1.2 Lexical Components:
         a) Special Symbols (Operators and Separators):
             -Operators: + - * / = == != > < >= <=
-            -Separators: ( ) [ ] , : space
+            -Separators: ( ) { } [ ] , : ; space
         b) Reserved Words (Keywords):
-            -Data Types: int float char string custom_type
-            -Control Statements: if else while def return
-            -I/O Statements: input print
-            -Boolean Values: True False
+            -Data Types: int float struct
+            -Control Statements: if else while for
+            -I/O Statements: cin cout
+            -Boolean Values: true false
         c) Identifiers:
                 identifier ::= letter {letter | digit | _}
                 letter ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
@@ -23,46 +24,47 @@
             -Float constants:
                 float ::= int_const "." uint
             -String constants:
-                string ::= "string{char}"
-                char ::= letter | digit 
+                string ::= "\"" string{char} "\""
+                char ::= letter | digit | symbol
             -Boolean constants: the values True and False.
                 bool ::= True | False
 2. Syntax:
     2.1 Program Structure:
-        program ::= "def" "main" "(" ")" ":" cmpdstmt
-    2.2 Compound Statement:
-        suite ::= stmtlist NEWLINE
-        stmt ::= stmtlist NEWLINE | cmpdstmt
-        stmtlist ::= simple_stmt {";" simple_stmt} [";"] stmtlist
-    2.3 Statements:
-        stmt ::= assignstmt | iostmt | structstmt
-        simplstmt ::= assignstmt | iostmt
-        structstmt ::= ifstmt | whilestmt
+        program ::= "int" "main" "(" ")" "{" cmpdstmt "}"
+
+    2.2 Declarations:
+    	decl ::= type idlist;
+    	idlist ::= ID | ID "," idlist
+    	type ::= "int" | "float" | "string" | "bool"
+    	structdecl ::= "struct" "{" {decl | structdecl} "}" ID ";" 
+
+    2.3 Compound Statement:
+        cmpdstmt ::= "{" stmtlist "}"
+    	stmtlist ::= stmt | stmt ";" stmtlist
+    
+    2.4 Statements:
+        stmt ::= simplestmt | structstmt 
+	    simplestmt ::= assignstmt | iostmt 
+	    structstmt ::= ifstmt | whilestmt
 
         Assignment Statement:
-        assignstmt ::= (ID "=" expression) | tupleassign
-        tupleid ::= ID | (tupleid ",")
-        tupleexpr ::= expression | (expression ",")
-        tupleassign ::= tupleid "=" tupleexpr
+        assignstsmt ::= ID "=" expression ";"
 
         Input/Output Statement:
-        iostmt ::= "input" "(" IDENTIFIER ")" | "print" "(" expression ")"
+        iostmt ::= "cin" ">>" IDENTIFIER ";" | "cout" "<<" expression ";"
         
         If-Else Statement:
-        ifstmt ::= "if" condition ":" suite ["else" ":" suite]
+        ifstmt ::= "if" "(" condition ")" cmpdstmt ["else" cmpdstsmt]
 
         While Statement:
-        whilestmt ::= "while" condition ":" suite
+        whilestmt ::= "while" "(" condition ")" cmpdstmt
 
-    2.4 Expressions:
-        expression ::= expression ADD_OP term | term
+    2.5 Expressions:
+        expression ::= expression ADDOP term | term
         term ::= term MUL_OP factor | factor
         factor ::= "(" expression ")" | IDENTIFIER | constant
-    2.5 Conditions:
+    2.6 Conditions:
         condition ::= expression REL_OP expression
-        REL_OP ::= "==" | "!=" | "<" | "<=" | ">" | ">="
-        ADD_OP ::= "+" | "-"
-        MUL_OP ::= "*" | "/"
-    2.6 Constants:
-        constant ::= int_const | float_const | string_const | bool_const
-        bool_const ::= "True" | "False"
+        RELOP ::= "==" | "!=" | "<" | "<=" | ">" | ">="
+        ADDOP ::= "+" | "-"
+        MULOP ::= "*" | "/"
