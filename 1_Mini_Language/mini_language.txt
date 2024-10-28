@@ -30,7 +30,11 @@ Mini-Language based on  C++:
                 bool ::= True | False
 2. Syntax:
     2.1 Program Structure:
-        program ::= "int" "main" "(" ")" "{" cmpdstmt "}"
+	decllib ::= "#include" "<"library">"
+	library ::= iostream | stdio.h
+	declnmpsc ::= "using" "namespace" nmspc ";"
+	nmspc ::= std | ...
+        program ::= {headers} NEWLINE {declnmspc} "int" "main" "(" ")" "{" cmpdstmt "}"
 
     2.2 Declarations:
     	decl ::= type idlist;
