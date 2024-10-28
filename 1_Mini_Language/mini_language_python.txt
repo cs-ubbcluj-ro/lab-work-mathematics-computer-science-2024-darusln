@@ -54,15 +54,15 @@
         While Statement:
         whilestmt ::= "while" condition ":" suite
 
-    2.6 Expressions:
+    2.4 Expressions:
         expression ::= expression ADD_OP term | term
         term ::= term MUL_OP factor | factor
         factor ::= "(" expression ")" | IDENTIFIER | constant
-    2.7 Conditions:
+    2.5 Conditions:
         condition ::= expression REL_OP expression
         REL_OP ::= "==" | "!=" | "<" | "<=" | ">" | ">="
         ADD_OP ::= "+" | "-"
         MUL_OP ::= "*" | "/"
-    2.8 Constants:
+    2.6 Constants:
         constant ::= int_const | float_const | string_const | bool_const
         bool_const ::= "True" | "False"
