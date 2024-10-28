@@ -1,0 +1,68 @@
+1. Language Definition:
+    1.1 Alphabet:
+        Upper and lower case letters (A-Z, a-z) from the English alphabet
+        Underline character _ (for identifier separation)
+        Decimal digits (0-9)
+    1.2 Lexical Components:
+        a) Special Symbols (Operators and Separators):
+            -Operators: + - * / = == != > < >= <=
+            -Separators: ( ) [ ] , : space
+        b) Reserved Words (Keywords):
+            -Data Types: int float char string custom_type
+            -Control Statements: if else while def return
+            -I/O Statements: input print
+            -Boolean Values: True False
+        c) Identifiers:
+                identifier ::= letter {letter | digit | _}
+                letter ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+                digit ::= "0" | "1" | ... | "9"
+        d) Constants:
+            -Integer value:
+                int ::= +uint | -uint | uint
+                uint ::= digit {digit}
+            -Float constants:
+                float ::= int_const "." uint
+            -String constants:
+                string ::= "string{char}"
+                char ::= letter | digit 
+            -Boolean constants: the values True and False.
+                bool ::= True | False
+2. Syntax:
+    2.1 Program Structure:
+        program ::= "def" "main" "(" ")" ":" cmpdstmt
+    2.2 Compound Statement:
+        suite ::= stmtlist NEWLINE
+        stmt ::= stmtlist NEWLINE | cmpdstmt
+        stmtlist ::= simple_stmt {";" simple_stmt} [";"] stmtlist
+    2.3 Statements:
+        stmt ::= assignstmt | iostmt | structstmt
+        simplstmt ::= assignstmt | iostmt
+        structstmt ::= ifstmt | whilestmt
+
+        Assignment Statement:
+        assignstmt ::= (ID "=" expression) | tupleassign
+        tupleid ::= ID | (tupleid ",")
+        tupleexpr ::= expression | (expression ",")
+        tupleassign ::= tupleid "=" tupleexpr
+
+        Input/Output Statement:
+        iostmt ::= "input" "(" IDENTIFIER ")" | "print" "(" expression ")"
+        
+        If-Else Statement:
+        ifstmt ::= "if" condition ":" suite ["else" ":" suite]
+
+        While Statement:
+        whilestmt ::= "while" condition ":" suite
+
+    2.6 Expressions:
+        expression ::= expression ADD_OP term | term
+        term ::= term MUL_OP factor | factor
+        factor ::= "(" expression ")" | IDENTIFIER | constant
+    2.7 Conditions:
+        condition ::= expression REL_OP expression
+        REL_OP ::= "==" | "!=" | "<" | "<=" | ">" | ">="
+        ADD_OP ::= "+" | "-"
+        MUL_OP ::= "*" | "/"
+    2.8 Constants:
+        constant ::= int_const | float_const | string_const | bool_const
+        bool_const ::= "True" | "False"
