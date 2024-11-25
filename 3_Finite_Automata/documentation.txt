@@ -1,0 +1,9 @@
+FA         ::= States "\n" Alphabet "\n" StartState "\n" FinalStates "\n" Transitions
+States     ::= State {"," State}
+State      ::= [A-Za-z0-9]+
+Alphabet   ::= Symbol {"," Symbol}
+Symbol     ::= [A-Za-z0-9]
+StartState ::= State
+FinalStates ::= State {"," State}
+Transitions ::= Transition {"\n" Transition}
+Transition ::= State "," Symbol "," State
