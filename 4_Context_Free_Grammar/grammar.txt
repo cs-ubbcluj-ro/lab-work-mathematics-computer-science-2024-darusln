@@ -1,3 +1,65 @@
+Syntactical construct:
+
+body
+
+---------------------------------------------------------------------------------------------------
+
+Terminals:
+
+#include, <, >, using, namespace, int, main, struct, if, else, while, true, false, cin, cout
+{, }, ;, =, (, ), ,, <<, >>, +, -, *, /, ==, !=, <, <=, >, >=
+' " '
+true, false
+id, number
+"iostream", "stdio.h", std
+
+---------------------------------------------------------------------------------------------------
+
+Nonterminals:
+
+decl_lib
+library
+decl_nmpsc
+nmspc
+body
+
+decl
+idlist
+type
+struct_decl
+
+stmt_list
+stmt
+simplestmt
+structstmt
+assignstmt
+iostmt
+ifstmt
+whilestmt
+expression
+term
+factor
+condition
+
+constant
+int_constant
+float_constant
+string_constant
+boolean_constant
+digit_list
+letter_list
+number
+true_digit
+digit
+letter
+character
+special_character
+id_list
+
+---------------------------------------------------------------------------------------------------
+
+Syntactical rules:
+
 decl_lib -> "#include" "<" library ">" | decl_lib
 library -> "iostream" | "stdio.h" | ...
 decl_nmpsc -> "using" "namespace" nmspc ";" | decl_nmpsc
@@ -6,9 +68,10 @@ nmspc -> "std" | ...
 body -> decl_lib decl_nmspc "int" "main" "(" ")" "{" stmt_list "}"
 
 decl -> type idlist ";"
+decl_list -> decl | decl_list
 idlist -> ID | ID "," idlist
 type -> "int" | "float" | "string" | "bool"
-struct_decl -> "struct" "{" {decl | structdecl} "}" ID ";"
+struct_decl -> "struct" "{" decl_list "}" ID ";"
 
 stmtlist -> stmt ";" | stmtlist
 stmt -> simplestmt | structstmt 
@@ -19,7 +82,7 @@ assignstsmt -> ID "=" expression
 
 iostmt -> "cin" ">>" ID | "cout" "<<" expression 
         
-ifstmt -> "if" "(" condition ")" "{" stmt_list "}" ["else" "{" stmt_list "}"]
+ifstmt -> "if" "(" condition ")" "{" stmt_list "}" "else" "{" stmt_list "}" | "if" "(" condition ")" "{" stmt_list "}"
 whilestmt -> "while" "(" condition ")" "{" stmt_list "}"
 
 expression -> expression ADDOP term | term
@@ -31,19 +94,25 @@ RELOP -> "==" | "!=" | "<" | "<=" | ">" | ">="
 ADDOP -> "+" | "-"
 MULOP -> "*" | "/"
 
-constant = int_constant | float_constant | string_constant | boolean_constant
+constant -> int_constant | float_constant | string_constant | boolean_constant
 
-number -> true_digit | true_digit { digit }
-int_constant -> [ "+" | "-" ] number
+digit_list -> true_digit | digit_list
+number -> true_digit | digit_list | number
+letter_list -> letter | digit | special_character | letter_list
+
+int_constant -> "+" number | "-" number | number
 float_constant -> int_constant "." number
 string_constant -> '"' { character } '"'
 boolean_constant -> "true" | "false"
 
-ID = letter { letter | digit | "_" }
+character -> letter | digit | special_character
+
+ID -> letter id_list
+id_list -> letter id_list | digit id_list | "_" id_list| eps
 
 true_digit -> "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 digit -> "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 letter -> "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
 
-character -> letter | digit | special_character
+
 special_character -> "_" | "+" | "-" | "*" | "/" | "=" | "!" | ... 
