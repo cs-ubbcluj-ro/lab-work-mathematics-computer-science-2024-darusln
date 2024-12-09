@@ -1,0 +1,29 @@
+file = { rule } { auxiliary_definition }
+
+rule = non_terminal "->" production newline
+
+production = alternative { "|" alternative }
+alternative = element { element }
+
+element = non_terminal | terminal | repetition | optional | grouping
+
+non_terminal = identifier
+terminal = '"' text '"'
+repetition = "{" element "}"
+optional = "[" element "]"
+grouping = "(" element ")"
+
+auxiliary_definition = auxiliary_non_terminal "=" auxiliary_body newline
+
+auxiliary_body = alternative { "|", alternative }
+auxiliary_non_terminal = identifier
+
+identifier = letter { letter | digit | "_" }
+text = character { character }
+
+character = letter | digit | special_character
+special_character = "_" | "+" | "-" | "*" | "/" | "=" | "!" | ... 
+
+newline = "\n"
+letter = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"

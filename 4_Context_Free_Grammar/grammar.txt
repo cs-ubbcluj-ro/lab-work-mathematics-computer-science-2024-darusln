@@ -1,0 +1,49 @@
+decl_lib -> "#include" "<" library ">" | decl_lib
+library -> "iostream" | "stdio.h" | ...
+decl_nmpsc -> "using" "namespace" nmspc ";" | decl_nmpsc
+nmspc -> "std" | ...
+
+body -> decl_lib decl_nmspc "int" "main" "(" ")" "{" stmt_list "}"
+
+decl -> type idlist ";"
+idlist -> ID | ID "," idlist
+type -> "int" | "float" | "string" | "bool"
+struct_decl -> "struct" "{" {decl | structdecl} "}" ID ";"
+
+stmtlist -> stmt ";" | stmtlist
+stmt -> simplestmt | structstmt 
+simplestmt -> assignstmt | iostmt 
+structstmt -> ifstmt | whilestmt
+
+assignstsmt -> ID "=" expression 
+
+iostmt -> "cin" ">>" ID | "cout" "<<" expression 
+        
+ifstmt -> "if" "(" condition ")" "{" stmt_list "}" ["else" "{" stmt_list "}"]
+whilestmt -> "while" "(" condition ")" "{" stmt_list "}"
+
+expression -> expression ADDOP term | term
+term -> term MUL_OP factor | factor
+factor -> "(" expression ")" | ID | constant
+
+condition -> expression REL_OP expression
+RELOP -> "==" | "!=" | "<" | "<=" | ">" | ">="
+ADDOP -> "+" | "-"
+MULOP -> "*" | "/"
+
+constant = int_constant | float_constant | string_constant | boolean_constant
+
+number -> true_digit | true_digit { digit }
+int_constant -> [ "+" | "-" ] number
+float_constant -> int_constant "." number
+string_constant -> '"' { character } '"'
+boolean_constant -> "true" | "false"
+
+ID = letter { letter | digit | "_" }
+
+true_digit -> "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+digit -> "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+letter -> "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+
+character -> letter | digit | special_character
+special_character -> "_" | "+" | "-" | "*" | "/" | "=" | "!" | ... 
